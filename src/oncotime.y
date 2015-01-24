@@ -35,8 +35,8 @@
 %%
 
 
- // the first rule defined is the highest-level rule, which in our
- // case is just the concept of a whole "program file":
+ // Program marks the beginning of an OncoTime program
+
     
 
 program:
