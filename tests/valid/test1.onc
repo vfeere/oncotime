@@ -1,0 +1,12 @@
+script cat(dog, cat, dog)
+use dog.grp
+use cat.grp
+
+group cat = {"blah", "cat", dog}
+
+group dog = {"bloop", "blip", blap}
+
+population is gender: * cat: dog to bip  blah: 435
+
+period is months: 1 years: 3
+
