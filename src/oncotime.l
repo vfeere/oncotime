@@ -6,13 +6,25 @@
 extern int line;
 %}
 
+%x comment
 %%
+
+
 
 \n { line++;}
 "//".*   
 [ \t]+
 
 [a-zA-Z_][a-zA-Z0-9_]*".grp" return tExternalFile;
+
+ "/*"         BEGIN(comment);
+<comment>[^*\n]*        /* eat anything that's not a '*' */
+<comment>"*"+[^*/\n]*   /* eat up '*'s not followed by '/'s */
+<comment>\n             ++line;
+<comment>"*"+"/"        {
+    BEGIN(INITIAL);
+    return COMMENT;
+}
 
 "\"".*"\""                   {
    yylval.stringconst =
@@ -60,7 +72,8 @@ extern int line;
 
 
 "foreach"    return FOREACH;
-"print"      return PRINT;
+"print"      return FUNC;
+"patient"    return PATIENT;
 "patients"   return PATIENTS;
 "timeline"   return TIMELINE;
 "of"         return OF;
@@ -70,7 +83,7 @@ extern int line;
 "use"        return USE;
 
 "group"      return GROUP;
-"barchart"   return BARCHART;
+"barchart"   return FUNC;
 "element"    return ELEMENT;
 
 "sequences"  return SEQUENCES;
@@ -78,6 +91,8 @@ extern int line;
 "list"       return LIST;
 "native"     return NATIVE;
 "script"     return SCRIPT;
+
+"table"      return TYPE;
 
 "population" return POPULATION;
 "period"     return PERIOD;

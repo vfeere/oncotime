@@ -18,10 +18,11 @@
 %token <stringconst>	tExternalFile
 %token	<stringconst>	tString
 			
+			
 %token IF ELSE ENDIF THEN FOREACH PRINT PATIENTS
 %token TIMELINE OF IS EVENTS ARE USE GROUP BARCHART ELEMENT
 %token SEQUENCES LIKE LIST NATIVE SCRIPT NOT ARROW POPULATION TO
-%token PERIOD 
+%token PERIOD COMMENT PATIENT TYPE FUNC
 
 			
 %start program		
@@ -45,13 +46,17 @@ program:
 	|	header_section use_section {printf("Valid\n");}
 	|	header_section filter_section {printf("Valid\n");}
 	|	header_section use_section filter_section {printf("Valid\n");}
-	|	header_section group_section
-	|	header_section use_section group_section
-	|	header_section group_section filter_section
-	|	header_section use_section group_section filter_section
-
-		
-	/* |	header_section doc_comment use_section group_section filter_section body_section { printf("Valid\n"); } */
+	|	header_section group_section {printf("Valid\n");}
+	|	header_section use_section group_section {printf("Valid\n");}
+	|	header_section group_section filter_section {printf("Valid\n");}
+	|	header_section use_section group_section filter_section {printf("Valid\n");}
+	|	header_section computation_section {printf("Valid\n");}
+	|	header_section group_section computation_section {printf("Valid\n");}
+	|	header_section filter_section computation_section {printf("Valid\n");}
+	|	header_section use_section computation_section {printf("Valid\n");}
+	|	header_section use_section filter_section computation_section {printf("Valid\n");}
+	|	header_section use_section group_section computation_section {printf("Valid\n");}
+	|	header_section use_section group_section filter_section computation_section {printf("Valid\n");}
 	;
 
 //List of arguments separated by commas. Used universally
@@ -99,15 +104,15 @@ header_section:
 	;
 
 header:
-		SCRIPT tIdentifier
-	|	SCRIPT tIdentifier '(' id_arg_list ')'
+		SCRIPT tIdentifier doc_comment
+	|	SCRIPT tIdentifier '(' id_arg_list ')' doc_comment
 	;
 
 
 
 //TODO - Every program must have a multiline documentation comment
 doc_comment:
-	%empty 	
+	COMMENT
 	;
 
 //Section of the program that includes external files
@@ -146,6 +151,42 @@ events_list:
 		EVENTS ARE id_arg_list
 	;
 
+
+
+//Computations that we wish to do
+computation_section:
+		PRINT tIdentifier
+	|	foreach_statement
+	|	declaration_statement
+	|	computation_section PRINT tIdentifier
+	|	computation_section foreach_statement
+	|	computation_section declaration_statement
+       	;
+		
+
+/* computation_section: */
+/* 		computation_statement */
+/* 	|	computation_section computation_section */
+/* 	; */
+
+/* computation_statement: */
+/* 		PRINT tIdentifier */
+	/* 	foreach_statement */
+	/* |	PRINT tIdentifier */
+	/* ; */
+
+foreach_statement:
+		FOREACH for_item FUNC tIdentifier
+	|	FOREACH for_item '{' computation_section '}'
+	;
+
+for_item:
+		PATIENT tIdentifier
+	|	tIdentifier
+	;
+
+declaration_statement:
+		TYPE tIdentifier '=' tIdentifier
 
 
 

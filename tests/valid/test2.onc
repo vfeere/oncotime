@@ -1,0 +1,10 @@
+script foo(arg1, arg2)
+/* This is what the code does */
+
+
+foreach patient x print y
+foreach patient y {
+foreach patient z print y
+}
+
+table x = y

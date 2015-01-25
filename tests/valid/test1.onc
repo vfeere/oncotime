@@ -1,12 +1,6 @@
-script cat(dog, cat, dog)
-use dog.grp
-use cat.grp
+script foo(man, dog, cat)
+/* jfioeaje
+feafe*/
 
-group cat = {"blah", "cat", dog}
-
-group dog = {"bloop", "blip", blap}
-
-population is gender: * cat: dog to bip  blah: 435
-
-period is months: 1 years: 3
-
+use stop.grp
+use block.grp

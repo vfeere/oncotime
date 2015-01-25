@@ -1,0 +1,1092 @@
+Terminals unused in grammar
+
+   tFloat
+   IF
+   ELSE
+   ENDIF
+   THEN
+   PATIENTS
+   TIMELINE
+   OF
+   BARCHART
+   ELEMENT
+   SEQUENCES
+   LIKE
+   LIST
+   NATIVE
+   NOT
+   ARROW
+   '+'
+   '-'
+   '/'
+   UMINUS
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: %empty
+    2        | header_section
+    3        | header_section use_section
+    4        | header_section filter_section
+    5        | header_section use_section filter_section
+    6        | header_section group_section
+    7        | header_section use_section group_section
+    8        | header_section group_section filter_section
+    9        | header_section use_section group_section filter_section
+   10        | header_section computation_section
+   11        | header_section group_section computation_section
+   12        | header_section filter_section computation_section
+   13        | header_section use_section computation_section
+   14        | header_section use_section filter_section computation_section
+   15        | header_section use_section group_section computation_section
+   16        | header_section use_section group_section filter_section computation_section
+
+   17 id_arg_list: tIdentifier
+   18            | id_arg_list ',' tIdentifier
+
+   19 string_arg_list: tString
+   20                | tIdentifier
+   21                | string_arg_list ',' tString
+   22                | string_arg_list ',' tIdentifier
+
+   23 filter_arg_list: filter_arg
+   24                | filter_arg_list ',' filter_arg
+   25                | filter_arg TO filter_arg
+
+   26 filter_arg: tIdentifier
+   27           | tInt
+
+   28 filter_list: filter_statement
+   29            | filter_list filter_statement
+
+   30 filter_statement: tIdentifier ':' filter_arg_list
+   31                 | tIdentifier ':' '*'
+
+   32 header_section: header
+
+   33 header: SCRIPT tIdentifier doc_comment
+   34       | SCRIPT tIdentifier '(' id_arg_list ')' doc_comment
+
+   35 doc_comment: COMMENT
+
+   36 use_section: USE tExternalFile
+   37            | use_section USE tExternalFile
+
+   38 group_section: GROUP tIdentifier '=' '{' string_arg_list '}'
+   39              | group_section GROUP tIdentifier '=' '{' string_arg_list '}'
+
+   40 filter_section: population_list period_list events_list
+   41               | population_list
+   42               | period_list
+   43               | events_list
+   44               | population_list period_list
+   45               | period_list events_list
+
+   46 population_list: POPULATION IS filter_list
+
+   47 period_list: PERIOD IS filter_list
+
+   48 events_list: EVENTS ARE id_arg_list
+
+   49 computation_section: PRINT tIdentifier
+   50                    | foreach_statement
+   51                    | computation_section PRINT tIdentifier
+   52                    | computation_section foreach_statement
+
+   53 foreach_statement: FOREACH PATIENT FOREACH PATIENT '{' computation_section '}'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 34
+')' (41) 34
+'*' (42) 31
+'+' (43)
+',' (44) 18 21 22 24
+'-' (45)
+'/' (47)
+':' (58) 30 31
+'=' (61) 38 39
+'{' (123) 38 39 53
+'}' (125) 38 39 53
+error (256)
+tInt (258) 27
+tFloat (259)
+tIdentifier (260) 17 18 20 22 26 30 31 33 34 38 39 49 51
+tExternalFile (261) 36 37
+tString (262) 19 21
+IF (263)
+ELSE (264)
+ENDIF (265)
+THEN (266)
+FOREACH (267) 53
+PRINT (268) 49 51
+PATIENTS (269)
+TIMELINE (270)
+OF (271)
+IS (272) 46 47
+EVENTS (273) 48
+ARE (274) 48
+USE (275) 36 37
+GROUP (276) 38 39
+BARCHART (277)
+ELEMENT (278)
+SEQUENCES (279)
+LIKE (280)
+LIST (281)
+NATIVE (282)
+SCRIPT (283) 33 34
+NOT (284)
+ARROW (285)
+POPULATION (286) 46
+TO (287) 25
+PERIOD (288) 47
+COMMENT (289) 35
+PATIENT (290) 53
+UMINUS (291)
+
+
+Nonterminals, with rules where they appear
+
+$accept (48)
+    on left: 0
+program (49)
+    on left: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16, on right: 0
+id_arg_list (50)
+    on left: 17 18, on right: 18 34 48
+string_arg_list (51)
+    on left: 19 20 21 22, on right: 21 22 38 39
+filter_arg_list (52)
+    on left: 23 24 25, on right: 24 30
+filter_arg (53)
+    on left: 26 27, on right: 23 24 25
+filter_list (54)
+    on left: 28 29, on right: 29 46 47
+filter_statement (55)
+    on left: 30 31, on right: 28 29
+header_section (56)
+    on left: 32, on right: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+header (57)
+    on left: 33 34, on right: 32
+doc_comment (58)
+    on left: 35, on right: 33 34
+use_section (59)
+    on left: 36 37, on right: 3 5 7 9 13 14 15 16 37
+group_section (60)
+    on left: 38 39, on right: 6 7 8 9 11 15 16 39
+filter_section (61)
+    on left: 40 41 42 43 44 45, on right: 4 5 8 9 12 14 16
+population_list (62)
+    on left: 46, on right: 40 41 44
+period_list (63)
+    on left: 47, on right: 40 42 44 45
+events_list (64)
+    on left: 48, on right: 40 43 45
+computation_section (65)
+    on left: 49 50 51 52, on right: 10 11 12 13 14 15 16 51 52 53
+foreach_statement (66)
+    on left: 53, on right: 50 52
+
+
+State 0
+
+    0 $accept: . program $end
+
+    SCRIPT  shift, and go to state 1
+
+    $default  reduce using rule 1 (program)
+
+    program         go to state 2
+    header_section  go to state 3
+    header          go to state 4
+
+
+State 1
+
+   33 header: SCRIPT . tIdentifier doc_comment
+   34       | SCRIPT . tIdentifier '(' id_arg_list ')' doc_comment
+
+    tIdentifier  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    2 program: header_section .
+    3        | header_section . use_section
+    4        | header_section . filter_section
+    5        | header_section . use_section filter_section
+    6        | header_section . group_section
+    7        | header_section . use_section group_section
+    8        | header_section . group_section filter_section
+    9        | header_section . use_section group_section filter_section
+   10        | header_section . computation_section
+   11        | header_section . group_section computation_section
+   12        | header_section . filter_section computation_section
+   13        | header_section . use_section computation_section
+   14        | header_section . use_section filter_section computation_section
+   15        | header_section . use_section group_section computation_section
+   16        | header_section . use_section group_section filter_section computation_section
+
+    FOREACH     shift, and go to state 7
+    PRINT       shift, and go to state 8
+    EVENTS      shift, and go to state 9
+    USE         shift, and go to state 10
+    GROUP       shift, and go to state 11
+    POPULATION  shift, and go to state 12
+    PERIOD      shift, and go to state 13
+
+    $default  reduce using rule 2 (program)
+
+    use_section          go to state 14
+    group_section        go to state 15
+    filter_section       go to state 16
+    population_list      go to state 17
+    period_list          go to state 18
+    events_list          go to state 19
+    computation_section  go to state 20
+    foreach_statement    go to state 21
+
+
+State 4
+
+   32 header_section: header .
+
+    $default  reduce using rule 32 (header_section)
+
+
+State 5
+
+   33 header: SCRIPT tIdentifier . doc_comment
+   34       | SCRIPT tIdentifier . '(' id_arg_list ')' doc_comment
+
+    COMMENT  shift, and go to state 22
+    '('      shift, and go to state 23
+
+    doc_comment  go to state 24
+
+
+State 6
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 7
+
+   53 foreach_statement: FOREACH . PATIENT FOREACH PATIENT '{' computation_section '}'
+
+    PATIENT  shift, and go to state 25
+
+
+State 8
+
+   49 computation_section: PRINT . tIdentifier
+
+    tIdentifier  shift, and go to state 26
+
+
+State 9
+
+   48 events_list: EVENTS . ARE id_arg_list
+
+    ARE  shift, and go to state 27
+
+
+State 10
+
+   36 use_section: USE . tExternalFile
+
+    tExternalFile  shift, and go to state 28
+
+
+State 11
+
+   38 group_section: GROUP . tIdentifier '=' '{' string_arg_list '}'
+
+    tIdentifier  shift, and go to state 29
+
+
+State 12
+
+   46 population_list: POPULATION . IS filter_list
+
+    IS  shift, and go to state 30
+
+
+State 13
+
+   47 period_list: PERIOD . IS filter_list
+
+    IS  shift, and go to state 31
+
+
+State 14
+
+    3 program: header_section use_section .
+    5        | header_section use_section . filter_section
+    7        | header_section use_section . group_section
+    9        | header_section use_section . group_section filter_section
+   13        | header_section use_section . computation_section
+   14        | header_section use_section . filter_section computation_section
+   15        | header_section use_section . group_section computation_section
+   16        | header_section use_section . group_section filter_section computation_section
+   37 use_section: use_section . USE tExternalFile
+
+    FOREACH     shift, and go to state 7
+    PRINT       shift, and go to state 8
+    EVENTS      shift, and go to state 9
+    USE         shift, and go to state 32
+    GROUP       shift, and go to state 11
+    POPULATION  shift, and go to state 12
+    PERIOD      shift, and go to state 13
+
+    $default  reduce using rule 3 (program)
+
+    group_section        go to state 33
+    filter_section       go to state 34
+    population_list      go to state 17
+    period_list          go to state 18
+    events_list          go to state 19
+    computation_section  go to state 35
+    foreach_statement    go to state 21
+
+
+State 15
+
+    6 program: header_section group_section .
+    8        | header_section group_section . filter_section
+   11        | header_section group_section . computation_section
+   39 group_section: group_section . GROUP tIdentifier '=' '{' string_arg_list '}'
+
+    FOREACH     shift, and go to state 7
+    PRINT       shift, and go to state 8
+    EVENTS      shift, and go to state 9
+    GROUP       shift, and go to state 36
+    POPULATION  shift, and go to state 12
+    PERIOD      shift, and go to state 13
+
+    $default  reduce using rule 6 (program)
+
+    filter_section       go to state 37
+    population_list      go to state 17
+    period_list          go to state 18
+    events_list          go to state 19
+    computation_section  go to state 38
+    foreach_statement    go to state 21
+
+
+State 16
+
+    4 program: header_section filter_section .
+   12        | header_section filter_section . computation_section
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 8
+
+    $default  reduce using rule 4 (program)
+
+    computation_section  go to state 39
+    foreach_statement    go to state 21
+
+
+State 17
+
+   40 filter_section: population_list . period_list events_list
+   41               | population_list .
+   44               | population_list . period_list
+
+    PERIOD  shift, and go to state 13
+
+    $default  reduce using rule 41 (filter_section)
+
+    period_list  go to state 40
+
+
+State 18
+
+   42 filter_section: period_list .
+   45               | period_list . events_list
+
+    EVENTS  shift, and go to state 9
+
+    $default  reduce using rule 42 (filter_section)
+
+    events_list  go to state 41
+
+
+State 19
+
+   43 filter_section: events_list .
+
+    $default  reduce using rule 43 (filter_section)
+
+
+State 20
+
+   10 program: header_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 10 (program)
+
+    foreach_statement  go to state 43
+
+
+State 21
+
+   50 computation_section: foreach_statement .
+
+    $default  reduce using rule 50 (computation_section)
+
+
+State 22
+
+   35 doc_comment: COMMENT .
+
+    $default  reduce using rule 35 (doc_comment)
+
+
+State 23
+
+   34 header: SCRIPT tIdentifier '(' . id_arg_list ')' doc_comment
+
+    tIdentifier  shift, and go to state 44
+
+    id_arg_list  go to state 45
+
+
+State 24
+
+   33 header: SCRIPT tIdentifier doc_comment .
+
+    $default  reduce using rule 33 (header)
+
+
+State 25
+
+   53 foreach_statement: FOREACH PATIENT . FOREACH PATIENT '{' computation_section '}'
+
+    FOREACH  shift, and go to state 46
+
+
+State 26
+
+   49 computation_section: PRINT tIdentifier .
+
+    $default  reduce using rule 49 (computation_section)
+
+
+State 27
+
+   48 events_list: EVENTS ARE . id_arg_list
+
+    tIdentifier  shift, and go to state 44
+
+    id_arg_list  go to state 47
+
+
+State 28
+
+   36 use_section: USE tExternalFile .
+
+    $default  reduce using rule 36 (use_section)
+
+
+State 29
+
+   38 group_section: GROUP tIdentifier . '=' '{' string_arg_list '}'
+
+    '='  shift, and go to state 48
+
+
+State 30
+
+   46 population_list: POPULATION IS . filter_list
+
+    tIdentifier  shift, and go to state 49
+
+    filter_list       go to state 50
+    filter_statement  go to state 51
+
+
+State 31
+
+   47 period_list: PERIOD IS . filter_list
+
+    tIdentifier  shift, and go to state 49
+
+    filter_list       go to state 52
+    filter_statement  go to state 51
+
+
+State 32
+
+   37 use_section: use_section USE . tExternalFile
+
+    tExternalFile  shift, and go to state 53
+
+
+State 33
+
+    7 program: header_section use_section group_section .
+    9        | header_section use_section group_section . filter_section
+   15        | header_section use_section group_section . computation_section
+   16        | header_section use_section group_section . filter_section computation_section
+   39 group_section: group_section . GROUP tIdentifier '=' '{' string_arg_list '}'
+
+    FOREACH     shift, and go to state 7
+    PRINT       shift, and go to state 8
+    EVENTS      shift, and go to state 9
+    GROUP       shift, and go to state 36
+    POPULATION  shift, and go to state 12
+    PERIOD      shift, and go to state 13
+
+    $default  reduce using rule 7 (program)
+
+    filter_section       go to state 54
+    population_list      go to state 17
+    period_list          go to state 18
+    events_list          go to state 19
+    computation_section  go to state 55
+    foreach_statement    go to state 21
+
+
+State 34
+
+    5 program: header_section use_section filter_section .
+   14        | header_section use_section filter_section . computation_section
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 8
+
+    $default  reduce using rule 5 (program)
+
+    computation_section  go to state 56
+    foreach_statement    go to state 21
+
+
+State 35
+
+   13 program: header_section use_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 13 (program)
+
+    foreach_statement  go to state 43
+
+
+State 36
+
+   39 group_section: group_section GROUP . tIdentifier '=' '{' string_arg_list '}'
+
+    tIdentifier  shift, and go to state 57
+
+
+State 37
+
+    8 program: header_section group_section filter_section .
+
+    $default  reduce using rule 8 (program)
+
+
+State 38
+
+   11 program: header_section group_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 11 (program)
+
+    foreach_statement  go to state 43
+
+
+State 39
+
+   12 program: header_section filter_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 12 (program)
+
+    foreach_statement  go to state 43
+
+
+State 40
+
+   40 filter_section: population_list period_list . events_list
+   44               | population_list period_list .
+
+    EVENTS  shift, and go to state 9
+
+    $default  reduce using rule 44 (filter_section)
+
+    events_list  go to state 58
+
+
+State 41
+
+   45 filter_section: period_list events_list .
+
+    $default  reduce using rule 45 (filter_section)
+
+
+State 42
+
+   51 computation_section: computation_section PRINT . tIdentifier
+
+    tIdentifier  shift, and go to state 59
+
+
+State 43
+
+   52 computation_section: computation_section foreach_statement .
+
+    $default  reduce using rule 52 (computation_section)
+
+
+State 44
+
+   17 id_arg_list: tIdentifier .
+
+    $default  reduce using rule 17 (id_arg_list)
+
+
+State 45
+
+   18 id_arg_list: id_arg_list . ',' tIdentifier
+   34 header: SCRIPT tIdentifier '(' id_arg_list . ')' doc_comment
+
+    ','  shift, and go to state 60
+    ')'  shift, and go to state 61
+
+
+State 46
+
+   53 foreach_statement: FOREACH PATIENT FOREACH . PATIENT '{' computation_section '}'
+
+    PATIENT  shift, and go to state 62
+
+
+State 47
+
+   18 id_arg_list: id_arg_list . ',' tIdentifier
+   48 events_list: EVENTS ARE id_arg_list .
+
+    ','  shift, and go to state 60
+
+    $default  reduce using rule 48 (events_list)
+
+
+State 48
+
+   38 group_section: GROUP tIdentifier '=' . '{' string_arg_list '}'
+
+    '{'  shift, and go to state 63
+
+
+State 49
+
+   30 filter_statement: tIdentifier . ':' filter_arg_list
+   31                 | tIdentifier . ':' '*'
+
+    ':'  shift, and go to state 64
+
+
+State 50
+
+   29 filter_list: filter_list . filter_statement
+   46 population_list: POPULATION IS filter_list .
+
+    tIdentifier  shift, and go to state 49
+
+    $default  reduce using rule 46 (population_list)
+
+    filter_statement  go to state 65
+
+
+State 51
+
+   28 filter_list: filter_statement .
+
+    $default  reduce using rule 28 (filter_list)
+
+
+State 52
+
+   29 filter_list: filter_list . filter_statement
+   47 period_list: PERIOD IS filter_list .
+
+    tIdentifier  shift, and go to state 49
+
+    $default  reduce using rule 47 (period_list)
+
+    filter_statement  go to state 65
+
+
+State 53
+
+   37 use_section: use_section USE tExternalFile .
+
+    $default  reduce using rule 37 (use_section)
+
+
+State 54
+
+    9 program: header_section use_section group_section filter_section .
+   16        | header_section use_section group_section filter_section . computation_section
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 8
+
+    $default  reduce using rule 9 (program)
+
+    computation_section  go to state 66
+    foreach_statement    go to state 21
+
+
+State 55
+
+   15 program: header_section use_section group_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 15 (program)
+
+    foreach_statement  go to state 43
+
+
+State 56
+
+   14 program: header_section use_section filter_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 14 (program)
+
+    foreach_statement  go to state 43
+
+
+State 57
+
+   39 group_section: group_section GROUP tIdentifier . '=' '{' string_arg_list '}'
+
+    '='  shift, and go to state 67
+
+
+State 58
+
+   40 filter_section: population_list period_list events_list .
+
+    $default  reduce using rule 40 (filter_section)
+
+
+State 59
+
+   51 computation_section: computation_section PRINT tIdentifier .
+
+    $default  reduce using rule 51 (computation_section)
+
+
+State 60
+
+   18 id_arg_list: id_arg_list ',' . tIdentifier
+
+    tIdentifier  shift, and go to state 68
+
+
+State 61
+
+   34 header: SCRIPT tIdentifier '(' id_arg_list ')' . doc_comment
+
+    COMMENT  shift, and go to state 22
+
+    doc_comment  go to state 69
+
+
+State 62
+
+   53 foreach_statement: FOREACH PATIENT FOREACH PATIENT . '{' computation_section '}'
+
+    '{'  shift, and go to state 70
+
+
+State 63
+
+   38 group_section: GROUP tIdentifier '=' '{' . string_arg_list '}'
+
+    tIdentifier  shift, and go to state 71
+    tString      shift, and go to state 72
+
+    string_arg_list  go to state 73
+
+
+State 64
+
+   30 filter_statement: tIdentifier ':' . filter_arg_list
+   31                 | tIdentifier ':' . '*'
+
+    tInt         shift, and go to state 74
+    tIdentifier  shift, and go to state 75
+    '*'          shift, and go to state 76
+
+    filter_arg_list  go to state 77
+    filter_arg       go to state 78
+
+
+State 65
+
+   29 filter_list: filter_list filter_statement .
+
+    $default  reduce using rule 29 (filter_list)
+
+
+State 66
+
+   16 program: header_section use_section group_section filter_section computation_section .
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+
+    $default  reduce using rule 16 (program)
+
+    foreach_statement  go to state 43
+
+
+State 67
+
+   39 group_section: group_section GROUP tIdentifier '=' . '{' string_arg_list '}'
+
+    '{'  shift, and go to state 79
+
+
+State 68
+
+   18 id_arg_list: id_arg_list ',' tIdentifier .
+
+    $default  reduce using rule 18 (id_arg_list)
+
+
+State 69
+
+   34 header: SCRIPT tIdentifier '(' id_arg_list ')' doc_comment .
+
+    $default  reduce using rule 34 (header)
+
+
+State 70
+
+   53 foreach_statement: FOREACH PATIENT FOREACH PATIENT '{' . computation_section '}'
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 8
+
+    computation_section  go to state 80
+    foreach_statement    go to state 21
+
+
+State 71
+
+   20 string_arg_list: tIdentifier .
+
+    $default  reduce using rule 20 (string_arg_list)
+
+
+State 72
+
+   19 string_arg_list: tString .
+
+    $default  reduce using rule 19 (string_arg_list)
+
+
+State 73
+
+   21 string_arg_list: string_arg_list . ',' tString
+   22                | string_arg_list . ',' tIdentifier
+   38 group_section: GROUP tIdentifier '=' '{' string_arg_list . '}'
+
+    ','  shift, and go to state 81
+    '}'  shift, and go to state 82
+
+
+State 74
+
+   27 filter_arg: tInt .
+
+    $default  reduce using rule 27 (filter_arg)
+
+
+State 75
+
+   26 filter_arg: tIdentifier .
+
+    $default  reduce using rule 26 (filter_arg)
+
+
+State 76
+
+   31 filter_statement: tIdentifier ':' '*' .
+
+    $default  reduce using rule 31 (filter_statement)
+
+
+State 77
+
+   24 filter_arg_list: filter_arg_list . ',' filter_arg
+   30 filter_statement: tIdentifier ':' filter_arg_list .
+
+    ','  shift, and go to state 83
+
+    $default  reduce using rule 30 (filter_statement)
+
+
+State 78
+
+   23 filter_arg_list: filter_arg .
+   25                | filter_arg . TO filter_arg
+
+    TO  shift, and go to state 84
+
+    $default  reduce using rule 23 (filter_arg_list)
+
+
+State 79
+
+   39 group_section: group_section GROUP tIdentifier '=' '{' . string_arg_list '}'
+
+    tIdentifier  shift, and go to state 71
+    tString      shift, and go to state 72
+
+    string_arg_list  go to state 85
+
+
+State 80
+
+   51 computation_section: computation_section . PRINT tIdentifier
+   52                    | computation_section . foreach_statement
+   53 foreach_statement: FOREACH PATIENT FOREACH PATIENT '{' computation_section . '}'
+
+    FOREACH  shift, and go to state 7
+    PRINT    shift, and go to state 42
+    '}'      shift, and go to state 86
+
+    foreach_statement  go to state 43
+
+
+State 81
+
+   21 string_arg_list: string_arg_list ',' . tString
+   22                | string_arg_list ',' . tIdentifier
+
+    tIdentifier  shift, and go to state 87
+    tString      shift, and go to state 88
+
+
+State 82
+
+   38 group_section: GROUP tIdentifier '=' '{' string_arg_list '}' .
+
+    $default  reduce using rule 38 (group_section)
+
+
+State 83
+
+   24 filter_arg_list: filter_arg_list ',' . filter_arg
+
+    tInt         shift, and go to state 74
+    tIdentifier  shift, and go to state 75
+
+    filter_arg  go to state 89
+
+
+State 84
+
+   25 filter_arg_list: filter_arg TO . filter_arg
+
+    tInt         shift, and go to state 74
+    tIdentifier  shift, and go to state 75
+
+    filter_arg  go to state 90
+
+
+State 85
+
+   21 string_arg_list: string_arg_list . ',' tString
+   22                | string_arg_list . ',' tIdentifier
+   39 group_section: group_section GROUP tIdentifier '=' '{' string_arg_list . '}'
+
+    ','  shift, and go to state 81
+    '}'  shift, and go to state 91
+
+
+State 86
+
+   53 foreach_statement: FOREACH PATIENT FOREACH PATIENT '{' computation_section '}' .
+
+    $default  reduce using rule 53 (foreach_statement)
+
+
+State 87
+
+   22 string_arg_list: string_arg_list ',' tIdentifier .
+
+    $default  reduce using rule 22 (string_arg_list)
+
+
+State 88
+
+   21 string_arg_list: string_arg_list ',' tString .
+
+    $default  reduce using rule 21 (string_arg_list)
+
+
+State 89
+
+   24 filter_arg_list: filter_arg_list ',' filter_arg .
+
+    $default  reduce using rule 24 (filter_arg_list)
+
+
+State 90
+
+   25 filter_arg_list: filter_arg TO filter_arg .
+
+    $default  reduce using rule 25 (filter_arg_list)
+
+
+State 91
+
+   39 group_section: group_section GROUP tIdentifier '=' '{' string_arg_list '}' .
+
+    $default  reduce using rule 39 (group_section)
