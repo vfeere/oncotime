@@ -186,7 +186,11 @@ for_item:
 	;
 
 declaration_statement:
-		TYPE tIdentifier '=' tIdentifier
+		TYPE tIdentifier '=' declarable_item
+        ;
+
+declarable_item:
+		tIdentifier
 
 
 
