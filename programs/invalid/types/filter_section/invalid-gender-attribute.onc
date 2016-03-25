@@ -1,0 +1,48 @@
+script printTimeline (deadID, noAliveID)
+
+/*  Extension of valid1.onc which computes and prints information about patients with lung cancer on a more tight filter. It also incorporates uses group files. */
+
+// --- GROUPS ---
+// (The most important groups for our purposes)
+group heart = {"HEART", "heart"}
+group dead = {"dead", "DEAD"}
+
+
+// --- FILTERS ---
+
+period is
+	months: 1 to 12
+	years: 2010, 2013 to 2015
+	years: 1991, 2014, 1
+	start: Monday_13th
+	end: Tuesday_19th
+	start: Monday_12th
+	days: Friday
+
+population is
+	
+	// Invalid gender error - anything is not a valid gender field value 
+	gender: F, female, male, anything
+	age: 20 to 55, 45 to 12, 13
+	diagnosis: "breast", "lungs"
+
+// --- COMPUTATIONS ---
+
+{ 	
+	foreach patient p {
+		if diagnosis = "lungs" then
+			if age < 30 then
+				print Gender, Age of p
+			else 
+				print Age of p
+			endif
+		endif
+	}
+
+	foreach doctor d {
+		print Name of d
+		foreach patient p
+			print timeline of p
+	}
+
+}

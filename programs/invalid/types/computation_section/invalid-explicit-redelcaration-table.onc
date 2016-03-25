@@ -1,0 +1,29 @@
+script printCountOfDiagnosis(d, a)
+
+/*  This script will print the number of patients with a particular diagnosis, age & gender then it will visualize it in a barchart.
+*/
+
+// Omitting Use, Group & Filter Sections
+
+// --- COMPUTATIONS ---
+
+{ 	
+
+	// redeclaring a as a table - NOT ALLOWED -- will throw error at symbol table creation
+	table a = count patients by Diagnosis
+	foreach element i of a
+		print a[i]
+
+	table b = count patients by Age
+	foreach element i of b
+		print b[i]
+
+	table c = count patients by Gender
+	foreach element i of c
+		print c[i]
+
+	barchart a
+	barchart b
+	barchart c
+
+}

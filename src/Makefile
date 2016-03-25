@@ -1,9 +1,23 @@
-debug:
-	flex oncotime.l
-	/usr/local/Cellar/bison/3.0.3/bin/bison --yacc --defines --verbose --debug oncotime.y
-	gcc lex.yy.c y.tab.c y.tab.h main.c -ll
+all: oncotime
 
-all:
-	flex oncotime.l
-	/usr/local/Cellar/bison/3.0.3/bin/bison --yacc --defines oncotime.y
-	gcc lex.yy.c y.tab.c y.tab.h main.c -ll
+debug:
+	scanner.c parser.debug.c parser.h main.c
+	gcc $^ -ll
+	mv a.out $@
+
+clean:
+	rm scanner.c parser.c parser.h parser.h.gch oncotime memory.h.gch tree.h.gch pretty.h.gch symtab.h.gch type.h.gch filterRefinements.h.gch preprocessor.h.gch importFiles.h.gch regex.h.gch codegen.h.gch parser.output
+	rm -rf a.out.dSYM
+
+parser.c: oncotime.y
+	bison --yacc -v --defines -o $@ $^
+
+parser.debug.c: oncotime.y
+		bison --yacc --defines --debug -o $@ $^
+
+scanner.c: oncotime.l
+	flex -o $@ $^
+
+oncotime: scanner.c parser.c parser.h tree.h tree.c memory.h memory.c pretty.h pretty.c symtab.h symtab.c type.h type.c regex.h regex.c filterRefinements.h filterRefinements.c importFiles.h importFiles.c codegen.h codegen.c preprocessor.h preprocessor.c events.c main.c
+	gcc $^ -ggdb -ll
+	mv a.out oncotime	

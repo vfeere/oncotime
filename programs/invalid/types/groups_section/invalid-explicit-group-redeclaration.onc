@@ -1,0 +1,6 @@
+script test(a,b)
+/* Comment */
+
+group c = {b,"hello"}
+group d = {a, b}
+group d = {a, "hi"}

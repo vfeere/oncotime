@@ -1,21 +1,25 @@
 %{
-#include "y.tab.h"
+#include "parser.h"
 #include <string.h>
 #include <stdlib.h>
+#include "pretty.h"
 
+extern void yyerror(char *error);
 extern int line;
+extern FILE * yyin;
+extern FILE * yyout;
 %}
 
 %x comment
 %%
-
-
-
 \n { line++;}
 "//".*   
 [ \t\r]+
 
-[a-zA-Z_][a-zA-Z0-9_]*".grp" return tExternalFile;
+[a-zA-Z_][a-zA-Z0-9_]*".grp" { yylval.stringconst =
+      (char *) malloc (strlen(yytext) + 1 );
+    sprintf(yylval.stringconst, "%s", yytext);
+  	return tExternalFile; }
 
  "/*"         BEGIN(comment);
 <comment>[^*\n]*        /* eat anything that's not a '*' */
@@ -26,7 +30,7 @@ extern int line;
     return COMMENT;
 }
 
-"\"".*"\""                   {
+\"(\\.|[^\\"])*\"     {
    yylval.stringconst =
       (char *) malloc (strlen(yytext) + 1 );
    sprintf(yylval.stringconst, "%s", yytext);
@@ -35,9 +39,6 @@ extern int line;
 }
 
 "*"       return '*';
-"/"       return '/';
-"+"       return '+';
-"-"       return '-';
 "("       return '(';
 ")"       return ')';
 ";"       return ';'; 
@@ -55,8 +56,31 @@ extern int line;
 ","       return ',';
 
 
-
-"="       return '=';
+"<="      { yylval.stringconst =
+      			(char *) malloc (strlen(yytext) + 1 ); 
+						sprintf(yylval.stringconst, "%s", yytext);
+						return tComparator; 
+					} 
+">="      { yylval.stringconst =
+      			(char *) malloc (strlen(yytext) + 1 ); 
+						sprintf(yylval.stringconst, "%s", yytext);
+					  return tComparator; 
+					} 
+"="       {	yylval.stringconst =
+      			(char *) malloc (strlen(yytext) + 1 );
+			 			sprintf(yylval.stringconst,"%s",yytext);
+						return tEquals; 
+					} 
+"<"       { yylval.stringconst =
+      			(char *) malloc (strlen(yytext) + 1 ); 
+						sprintf(yylval.stringconst,"%s",yytext);
+						return tComparator; 
+					} 
+">"       { yylval.stringconst =
+      			(char *) malloc (strlen(yytext) + 1 ); 
+						sprintf(yylval.stringconst,"%s",yytext);
+						return tComparator; 
+					} 
 "->"      return ARROW;
 "|"       return '|';
 
@@ -70,11 +94,25 @@ extern int line;
 "then"    return THEN; 
 
 
-
+"member"     return MEMBER;
+"in"         return IN;
 "foreach"    return FOREACH;
-"print"      return FUNC;
+"print"      return PRINT;
 "patient"    return PATIENT;
 "patients"   return PATIENTS;
+"doctor"     return DOCTOR;
+"diagnosis"  return DIAGNOSIS;
+"gender"     return GENDER;
+"age"        return AGE;
+"id"         return ID;
+"postalcode" return POSTALCODE;
+"birthyear"  return BIRTHYEAR;
+"years"      return YEARS;
+"months"     return MONTHS;
+"days"       return DAYS;
+"hours"      return HOURS;
+"start"      return START;
+"end"        return END;
 "timeline"   return TIMELINE;
 "of"         return OF;
 "is"         return IS;
@@ -83,28 +121,38 @@ extern int line;
 "use"        return USE;
 
 "group"      return GROUP;
-"barchart"   return FUNC;
+"barchart"   return BARCHART;
 "element"    return ELEMENT;
 
 "sequences"  return SEQUENCES;
+"sequence"   return SEQUENCE;
+
 "like"       return LIKE;
 "list"       return LIST;
 "native"     return NATIVE;
 "script"     return SCRIPT;
 
-"table"      return TYPE;
+
+"count"      return COUNT;
+"by"         return BY;
+
+"table"      return TABLE;
 
 "population" return POPULATION;
 "period"     return PERIOD;
 
 "to"         return TO;
 
+"length"     return LENGTH;
 
 
-(0|[1-9][0-9]*)\.[0-9]* { yylval.fval = atof(yytext); return tFloat; }
+
 0|([1-9][0-9]*)            { yylval.ival = atoi(yytext); return tInt; }
-
-
+([01]?[0-9]|2[0-3])":"[0-5][0-9]    {
+			yylval.hval  =
+      (char *) malloc (strlen(yytext) + 1 );
+   		sprintf(yylval.stringconst, "%s", yytext);
+		 	return tHour; }
 
 
 [a-zA-Z_][a-zA-Z0-9_]* {
@@ -114,6 +162,6 @@ extern int line;
    return tIdentifier;
 }
 
-. {yyerror(); exit(1);}
+. {yyerror("Scanner error. Invalid character."); exit(1);}
 
 %%

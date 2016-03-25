@@ -1,0 +1,26 @@
+Total: 49/50 
+
+Code did not compile. Enum overloading issue: -1 (tree.h vs filterRefinements.h has similar declarations of kind inside the structs. Remember enumerated values are global in scope. Also please ensure that your makefile specifies c99 since you require some of its features). You should test your code 
+
+Invalid Programs: 
+
+Question 1:  10/10 
+
+Invalid Programs provided: 5/5 
+Provided invalid programs that were rejected by the compiler: 5/5 
+
+There was a glibc error in invalid-sequence-non-event.onc under computations. No points were deducted since you had a large number of invalid programs. 
+
+Question 2: Scanner, Parser and Pretty Printer 30/ 30 
+
+- dumpsymtab implemented : 5/5 (nice, clean output)
+- pptype implemented: 5/5 
+
+Semantic Checks: 20/20 
+- all checks pass 
+
+- For postal codes you should have 3-6 letters allowed instead of 6 because of the way we structured our database. 
+
+Question 3:  10/10
+- Please proof read your report. 
+- Discussions on the design decisions (such identifiers in groups) are required. No points deducted because your group was very thorough in everything else. 

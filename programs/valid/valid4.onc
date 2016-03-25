@@ -1,0 +1,42 @@
+script ageGenderInfo(c)
+
+/* This script first counts patients by their birthyear, prints the number of different birthyears (given the population filter).  Loops through all of these patients, prints their birthyear and gender if male or diagnosis and gender if female.  It finally, takes the input parameters c and uses it to find and print a sequence matching CT_sim_booked -> CT_sim_completed -> appointment_scheduled for a patient c (if it exists). */
+
+group a = { "heart"}
+
+population is
+  gender: M, F
+  diagnosis: "brain", "breast", "rectum"
+  birthyear: 1950 to 2015
+
+period is
+  months: 1 to 6
+  years: 1980 to 2015
+  start: 1
+  end: 15
+  days: weekday, weekend
+
+{
+
+  table b = count patients by Age
+
+  print b.length
+
+  foreach patient p {
+    if gender = male then
+      print "BirthYear:"
+      print Birthyear of p
+      print "Gender:"
+      print Gender of p
+    else
+      print "Diagnosis:"
+      print Diagnosis of p
+      print "Gender:"
+      print Gender of p 
+    endif
+  }
+     
+   foreach sequence s like [CT_sim_booked(c) -> CT_sim_completed(c) -> appointment_scheduled(c)]
+      print s
+   
+}

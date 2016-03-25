@@ -1,6 +1,7 @@
 script foo(arg1, arg2)
 /* This is what the code does */
 
+// error here! - no brackets around computation section 
 
 foreach patient x print y
 foreach patient y {

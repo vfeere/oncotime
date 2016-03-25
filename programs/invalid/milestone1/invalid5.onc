@@ -1,0 +1,10 @@
+script noParamInSequence
+
+/* Some comment here */
+
+group heart = {"HEART","heart"}
+
+{
+foreach sequence s like [patient_seen -> patient_dismissed]
+	print timeline of s
+}

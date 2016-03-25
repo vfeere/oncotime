@@ -1,0 +1,24 @@
+script test(a,b)
+
+/* Comment */
+
+use events.grp
+
+group empty = {""}
+
+{
+
+table T0 = count patients by Diagnosis
+
+ foreach patient p{
+    foreach doctor d{
+      table T = count patients by Age
+      foreach patient p
+      {
+        table T = count patients by Diagnosis
+      }
+    }
+    table T = count patients by Gender
+ }
+ }
+  

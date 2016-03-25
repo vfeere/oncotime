@@ -1,0 +1,33 @@
+script printMultipleSequences
+
+/*  This program looks for all possible combinations of 3 patients, and prints the possible sequences
+*   they could have booked a CT, and then completed the CT. There is no filter so all patients are checked
+*/
+
+// --- USE ---
+use Events.grp // groups events
+
+// --- GROUPS ---
+group heart = {"HEART", "heart"}
+
+// --- FILTERS ---
+population is
+	   gender: female
+	   diagnosis: "breast"
+	   birthyear: 1951 to 1960
+	   id: 100 to 255
+
+// EVENTS ARE DEFAULTED - none indicated
+
+// --- COMPUTATIONS ---
+
+{
+	foreach patient p1 {
+		foreach patient p2 {
+			foreach patient p3 {
+				foreach sequence s like [CT_sim_booked(p1) -> CT_sim_completed(p2) -> CT_sim_completed(p3) -> appointment_scheduled(p2) ]
+				print s
+			}
+		}
+	}
+}

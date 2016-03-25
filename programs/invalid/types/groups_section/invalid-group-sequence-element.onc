@@ -1,0 +1,32 @@
+script invalidRedeclarations(a,b)
+
+/* This script performs all the disallowed redeclaration errors that
+ cause an error in the symbol table */
+
+group c = {"heart", b}
+// c is a group - invalid group sequence type
+group d = {"heart", c}
+
+{
+
+  //redeclaration as sequence
+  //list a = sequences like [CT_sim_booked(p)->CT_sim_completed(p)]
+
+  //redeclaration as table
+  table b = count patients by Diagnosis
+
+  //redeclaration in a nested scope
+  foreach patient p{
+    foreach doctor d {
+      table c = count patients by Gender
+      table c = count patients by Diagnosis
+    }
+  }
+
+  //undeclared identifier
+  print c
+
+
+
+
+}

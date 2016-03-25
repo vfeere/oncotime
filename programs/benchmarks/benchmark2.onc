@@ -1,0 +1,33 @@
+script printTimeline
+
+/* 
+*  This program looks for all situations where a patient was either booked for a CT or completed the CT and then either completed a CT or scheduled
+*  an appointment. This program is intense because the or operator increases the number of possibilities that must be searched
+*/
+
+// --- USE ---
+use Events.grp // groups events
+
+// --- GROUPS ---
+group heart = {"HEART", "heart"}
+
+// --- FILTERS ---
+population is
+	   gender: female
+	   diagnosis: "breast"
+	   birthyear: 1951 to 1960
+	   id: 100 to 2500
+
+
+
+
+
+// EVENTS ARE DEFAULTED - none indicated
+
+// --- COMPUTATIONS ---
+
+{
+	foreach patient p {
+		list s = sequences like [ CT_sim_booked(p) | CT_sim_completed(p) -> CT_sim_completed(p) | appointment_scheduled(p) ]
+	}
+}

@@ -1,0 +1,14 @@
+script printArrivalToSeenSequence
+
+/*  This script fetches all sequences where the patient has arrived and is seen and then prints the sequence
+*/
+
+// Omitting all sections except computations
+
+// --- COMPUTATIONS ---
+
+{ 	
+	list S = sequences like [patient_arrives(p) -> patient_seen(p)]
+	foreach member s in S
+		print s
+}

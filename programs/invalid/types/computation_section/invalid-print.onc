@@ -1,0 +1,12 @@
+script invalidPrint(a)
+
+/* Comment */
+
+
+{
+
+  //undeclared print
+  foreach patient p
+    print x
+
+}

@@ -1,0 +1,11 @@
+script invalidGroupRedeclaration(a)
+
+/*
+can't redeclare a script argument as a group 
+*/
+
+group a = {"dogs", "cats", "popstarts"}
+
+{
+  table a = count patients by Age
+}

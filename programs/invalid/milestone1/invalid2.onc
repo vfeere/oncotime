@@ -1,0 +1,59 @@
+script printTimeline
+
+/*  This script is useless
+blah
+blih
+*/
+
+// --- USE ---
+use Events.grp // groups events
+use otherEvents.grp
+use evenMoreEvents.grp
+
+
+// --- GROUPS ---
+// (The most important groups for our purposes)
+group heart = {"HEART", "heart"}
+group dead = {"dead", "DEAD", deadID, noAliveID}
+
+
+// --- FILTERS ---
+
+period is
+	months: 1 to 12
+	years: 2010, 2013 to 2015
+	years: 1991, 2014, 1 to cat //CANT BE IDENTIFIER
+	start: Monday 13th
+	end: Tuesday 19th
+	start: Monday 12th
+
+population is
+	gender: F, female, male
+	age: 20 to 55, 45 to 12, 13
+	diagnosis: "breast", "lungs", heart
+
+
+// EVENTS ARE DEFAULTED - none indicated
+
+events are cats, dogs, mice, men
+
+// --- COMPUTATIONS ---
+
+{ 	foreach patient p {
+		if diagnosis = "lungs" then
+			if age < 30 then
+				print Gender, Age of p
+			else 
+				print Age of p
+			endif
+		endif
+	}
+
+	foreach doctor d {
+		print Name of d
+		foreach patient p
+			print timeline of p
+	}
+
+}
+

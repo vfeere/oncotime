@@ -1,0 +1,25 @@
+//Given example
+
+Consult Referral Received
+-------------------------
+Select p.PatientSerNum, t.CreationDate as TimeStamp, t.DueDateTime, pr.PriorityCode, t.CompletionDate from Patient p, Task t, Priority pr, Alias a where a.AliasName = "CRR with Origin" and a.AliasSerNum = t.AliasSerNum and t.PatientSerNum = p.PatientSerNum and Status="Open" and pr.PrioritySerNum = t.PrioritySerNum limit 10;
+
+// I assume he means AliasName = "CT-Sim" when he says "you will find this under "CT-Sim" alias"
+
+CT Sim Booked
+-------------
+Select p.PatientSerNum, ap.LastUpdated from Patient p, Appointment ap, Alias a where a.AliasName = "Ct-Sim" and a.AliasSerNum = ap.AliasSerNum and a.LastUpdated = ap.LastUpdated and p.PatientSerNum = ap.PatientSerNum limit 10;
+
+CT SIM completed
+----------------
+Select ap.ScheduledStartTime as Start, ap.ScheduledEndTime as End, p.PatientSerNum from Patient p, Appointment ap, Alias a where a.AliasName="Ct-sim" and a.AliasSerNum = ap.AliasSerNum and p.PatientSerNum = ap.PatientSerNum and ap.Status = "Manually Completed" limit 10; 
+
+
+Ready For Physics QA
+--------------------
+
+Select p.PatientSerNum, t.CreationDate, t.DueDateTime, t.CompletionDate, pr.PrioritySerNum from Patient p, Task t, Priority pr, Alias a where a.AliasName = "Ready for Physics QA" and a.AliasSerNum = t.AliasSerNum and t.PatientSerNum = p.PatientSerNum and pr.PrioritySerNum = t.PrioritySerNum limit 10;
+
+Appointment Scheduled
+---------------------
+Select p.PatientSerNum, pl.PatientLocationID, ap.ScheduledStartTime as "Scheduled For"  from Patient p, PatientLocation pl, Appointment ap where p.PatientSerNum = ap.PatientSerNum and ap.AppointmentSerNum = pl.AppointmentSerNum

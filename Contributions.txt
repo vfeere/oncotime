@@ -1,0 +1,63 @@
+At each Milestone we will document what each group member worked on.
+
+// Milestone 1
+
+Victoria Feere
+- Revised grammar & scanner 
+- Wrote design documentation
+- AST COMPUTATION (if, foreach, print, barchart) Section
+- integrated COMPUTATION & FILTER section AST w/parser
+- Wrote valid/invalid programs
+- pretty print FILTER & COMPUTATION section
+- Makefile & run file
+
+Jonathan Eidelman
+- Wrote scanner
+- Wrote parser
+- setup general scanner & parser infrastructure
+- AST HEADER, LISTS, USE and GROUP section
+- integrated HEADER, LISTS, USE & GROUP section w/parser
+- wrote pretty printer USE, GROUP & LISTS section
+
+
+Guilherme Mansur
+- AST SEQUENCES & DECLARATION & FILTER_LISTS
+- integrated SEQUENCES & TABLES w/parser
+- wrote pretty printer SEQUENCES & DECLARATIONS section
+- wrote invalid1.onc and valid4.onc
+
+// Milestone 2
+
+Victoria Feere
+- Wrote majority of test cases
+- Wrote design documentation
+- General QA and debugging
+- Wrote refined filter generator (simplified filter branch for final code gen purposes)
+
+Jonathan Eidelman
+- Wrote type checker
+- Wrote code for importing external files
+
+Guilherme Mansur
+- Wrote symbol table
+
+// Milestone 3 & 4
+
+Victoria Feere
+- Wrote code gen for SQL connection/engine and queries for doctors, diagnosis & patients
+- Wrote code gen for imports, script name, params 
+- Wrote design doc
+- Wrote if-statements code gen
+- Tested python output files & performed general debugging
+
+Jonathan Eidelman
+- Wrote benchmark programs
+- Wrote sequence declaration code gen
+- Wrote for loop code gen
+- Wrote print statement code gen
+
+Guilherm Mansur
+- Wrote barchart code gen
+- Wrote event queries code gen
+- Wrote table declaration code gen
+- Implemented -v and -h flags

@@ -1,0 +1,43 @@
+script printTimeline
+
+/*  This script will print the age gender of a patient under 30 with lung cancer 
+	and if they are over 30 will print just their age.
+	It will then loop through the doctors printing their name followed by the timelines of all their patients.
+*/
+
+// --- GROUPS ---
+group heart = {"HEART", "heart"}
+
+// --- FILTERS ---
+
+period is
+	months: 1 to 12
+	years: 2010, 2013 to 2015
+	start: Monday_13th
+
+population is
+	gender: M, female
+	age: 20 to 55
+	// Invalid diagnosis - head is not a script argument and cannot be a group
+	diagnosis: "breast", "lungs", head
+	postalcode: H2A3K4
+
+// --- COMPUTATIONS ---
+
+{	foreach patient p {
+		if diagnosis = "lungs" then
+			if age < 30 then
+				print Gender, Age of p
+			else 
+				print Age of p
+			endif
+		endif
+	}
+
+	foreach doctor d {
+		print Name of d
+		foreach patient p
+			print timeline of p
+	}
+
+}

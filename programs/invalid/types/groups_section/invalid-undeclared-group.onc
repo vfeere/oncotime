@@ -1,0 +1,6 @@
+script invalidUndeclaredGroup
+
+/* this will thrown an erro when we attemp to use an undeclared indentifier 
+  in a group declaration */
+
+group heart = {"heart", notDeclared}
